@@ -17,3 +17,5 @@ google_plus_pasrser
 
 4) Start:  `casperjs build/app.js`
 
+
+P.S. my NodeJS -v is v0.10.26 (installed via NVM)
