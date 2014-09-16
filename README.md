@@ -15,7 +15,7 @@ google_plus_pasrser
 
 6) Developing only: `sh watch.sh`
 
-4) Start:  `casperjs build/app.js`
+4) Start:  `casperjs build/init.js`
 
 
 P.S. my NodeJS -v is v0.10.26 (installed via NVM)
