@@ -8,45 +8,6 @@
         return jq(container.children()[1]).find("[role='article']");
       }
     },
-    getReviewsWithResponse: function() {
-      var allReviews, el, response, review, reviews, _i, _len;
-      allReviews = window.googlePlusParser.getAllReviews();
-      reviews = [];
-      review = void 0;
-      response = void 0;
-      for (_i = 0, _len = allReviews.length; _i < _len; _i++) {
-        el = allReviews[_i];
-        el = jq(el);
-        review = {};
-        review["username"] = el.children().find("a")[1].innerHTML.split(">").reverse()[0];
-        review["image_link"] = el.find(".we.qAa.M5").attr("src");
-        review["review_rate"] = window.googlePlusParser.verbalizeRate(el.find(".b-db-ac-th").length);
-        review["review_text"] = el.find(".GKa.oAa").html();
-        reviews.push(review);
-      }
-      return reviews;
-    },
-    parseReviews: function() {
-      var ParserResults, allReviews, data, reviewsWithResponse, totalReviews, _i, _len;
-      allReviews = window.googlePlusParser.getAllReviews();
-      totalReviews = allReviews.length;
-      reviewsWithResponse = window.googlePlusParser.getReviewsWithResponse();
-      console.log("" + reviewsWithResponse + " out of " + totalReviews + " reviews have a response");
-      ["negative", "positive", "neutral"].forEach(function(sentiment) {
-        var responded, totalBySentiment;
-        totalBySentiment = window.googlePlusParser.countReviewsBySentiment["withResponse"];
-        responded = window.googlePlusParser.countReviewsBySentiment["all"];
-        return console.log("" + totalBySentiment + " out of " + responded + " have a  " + sentiment + " response");
-      });
-      ParserResults = [];
-      for (_i = 0, _len = reviewsWithResponse.length; _i < _len; _i++) {
-        data = reviewsWithResponse[_i];
-        ParserResults.push(data);
-      }
-      console.log("------ FINISH ------");
-      console.log(JSON.stringify(ParserResults));
-      return reviewsWithResponse;
-    },
     verbalizeRate: function(rate) {
       if (rate <= 2) {
         return "negative";
@@ -56,17 +17,33 @@
         return "positive";
       }
     },
-    countReviewsBySentiment: function(sentiment) {
-      var result, reviews;
-      reviews = getAllReviews();
-      result = {};
-      result["all"] = reviews.filter(function(el) {
-        return verbalizeRate(jq(el).find(".b-db-ac-th").length) === sentiment;
-      });
-      result["withResponse"] = result["all"].filter(function(el) {
-        return jq(el).find(".Cta .t7a");
-      });
-      return result;
+    parseReviews: function() {
+      var allReviews, el, link, responseSelector, review, reviews, selectedStartSelector, _base, _i, _len;
+      allReviews = window.googlePlusParser.getAllReviews();
+      reviews = [];
+      for (_i = 0, _len = allReviews.length; _i < _len; _i++) {
+        el = allReviews[_i];
+        el = jq(el);
+        review = {};
+        link = el.children().find("a[oid]")[1];
+        if (link) {
+          review.username = link.innerHTML.split(">").reverse()[0];
+          review.imageLink = "http:" + el.find(".we.qAa.M5").attr("src");
+          review.userLink = "https://plus.google.com/" + jq(link).attr("href").split("./")[1];
+        } else {
+          review.username = "A Google User";
+        }
+        selectedStartSelector = ".b-db-ac.b-db-ac-th";
+        review.rate = window.googlePlusParser.verbalizeRate(el.find(selectedStartSelector).length);
+        review.content = (typeof (_base = el.find(".GKa.oAa")).html === "function" ? _base.html() : void 0) || "";
+        responseSelector = "span.TTb:contains('Response from the owner')";
+        review.hasResponse = el.find(responseSelector).length > 0;
+        if (review.hasResponse) {
+          review.response = el.find(responseSelector).parent().next().html();
+        }
+        reviews.push(review);
+      }
+      return reviews;
     }
   };
 

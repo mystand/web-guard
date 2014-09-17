@@ -1,6 +1,6 @@
 {
     "name": "google-plus-parser",
     "devDependencies": {
-        "coffee-script": "*"
+        "coffee-script": "*",
     }
 }
