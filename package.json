@@ -1,6 +1,11 @@
 {
-    "name": "google-plus-parser",
-    "devDependencies": {
-        "coffee-script": "*",
-    }
+  "name": "google-plus-parser",
+  "devDependencies": {
+    "coffee-script": "*",
+    "spooky": "*"
+  },
+  "dependencies": {
+    "connect-multiparty": "^1.2.4",
+    "body-parser": "^1.8.2"
+  }
 }
