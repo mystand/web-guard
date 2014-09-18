@@ -17,5 +17,6 @@ google_plus_pasrser
 
 4) Start:  `casperjs build/init.js`
 
+5) Open results.csv in MS Excel
 
 P.S. my NodeJS -v is v0.10.26 (installed via NVM)
