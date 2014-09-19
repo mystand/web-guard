@@ -17,7 +17,7 @@ app.get '/', (req, res) ->
 app.post '/results', (req, res) ->
   console.log "POST results"
   url = req.body.url
-  applySpooky = require "./build/spooky-parser"
+  applySpooky = require path.join(__dirname, "spooky-parser")
   applySpooky url
   resultsTest = ->
    setTimeout ->

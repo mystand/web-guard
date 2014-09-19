@@ -31,7 +31,7 @@
     var applySpooky, resultsTest, url;
     console.log("POST results");
     url = req.body.url;
-    applySpooky = require("./build/spooky-parser");
+    applySpooky = require(path.join(__dirname, "spooky-parser"));
     applySpooky(url);
     resultsTest = function() {
       return setTimeout(function() {
