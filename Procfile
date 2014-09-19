@@ -1,1 +1,1 @@
-web: node build/app.js
+web: bower install && node build/app.js
