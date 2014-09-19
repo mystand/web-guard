@@ -1,4 +1,4 @@
-module.exports = (url, logfile)->
+module.exports = (url)->
   Spooky = require("spooky")
   spooky = new Spooky(
     child:
@@ -65,16 +65,16 @@ module.exports = (url, logfile)->
 
   spooky.on "error", (e, stack) ->
     console.error e
-    logfile stack  if stack
+    console.log stack  if stack
 
   #Uncomment this block to see all of the things Casper has to say.
   #There are a lot.
   #He has opinions.
   spooky.on 'console', (line) ->
-    logfile line
+    console.log line
 
   spooky.on "hello", (greeting) ->
-    logfile greeting
+    console.log greeting
 
   spooky.on "log", (log) ->
-    logfile log.message.replace(RegExp(" \\- .*"), "")  if log.space is "remote"
+    console.log log.message.replace(RegExp(" \\- .*"), "")  if log.space is "remote"

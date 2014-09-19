@@ -3,22 +3,22 @@ fs = require("fs")
 path = require "path"
 bodyParser = require 'body-parser'
 express = require 'express'
-logfile = (data) ->
-  console.log("LOG - #{data}")
-  fs.appendFileSync("./production.log", data.toString() + "\n")
+logfmt = require "logfmt"
+
 app = express()
 app.use(bodyParser())
-logfile "APP INIT"
+app.use(logfmt.requestLogger())
+port = Number(process.env.PORT || 5000);
 
 app.get '/', (req, res) ->
-  logfile "GET index"
+  console.log "GET index"
   res.sendFile(path.join(__dirname, '../public', 'index.html'))
 
 app.post '/results', (req, res) ->
-  logfile "POST results"
+  console.log "POST results"
   url = req.body.url
   applySpooky = require "build/spooky-parser"
-  applySpooky url, logfile
+  applySpooky url
   resultsTest = ->
    setTimeout ->
      resultsPath = path.join(__dirname, "../tmp", "results.csv")
@@ -30,4 +30,5 @@ app.post '/results', (req, res) ->
     , 500
   resultsTest()
 
-app.listen 8000
+app.listen port
+console.log("started on port: #{port}")
