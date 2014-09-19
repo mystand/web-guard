@@ -50,13 +50,13 @@ module.exports = (url)->
         fs = require('fs')
 
         fields = ["rate", "hasResponse", "username","imageLink","userLink","content","response"]
-        res = "#{fields.join(';')}\n"
+        res = "#{fields.join(',')}\n"
 
         for obj in data
           objectValues = for field in fields
             val = obj[field] || ""
-            val.toString().replace(/\s\s/g, "").replace(/\n|\r/g, "").replace(/;/g, "")
-          res += "#{objectValues.join(';')}\n"
+            val.toString().replace(/\s\s/g, "").replace(/\n|\r/g, "").replace(/,/g, ";")
+          res += "#{objectValues.join(",")}\n"
         fullFilename = "./tmp/results.csv"
         fs.write fullFilename, res
 

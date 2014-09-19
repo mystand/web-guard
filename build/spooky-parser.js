@@ -64,7 +64,7 @@
           var field, fields, fs, fullFilename, obj, objectValues, res, val, _i, _len;
           fs = require('fs');
           fields = ["rate", "hasResponse", "username", "imageLink", "userLink", "content", "response"];
-          res = "" + (fields.join(';')) + "\n";
+          res = "" + (fields.join(',')) + "\n";
           for (_i = 0, _len = data.length; _i < _len; _i++) {
             obj = data[_i];
             objectValues = (function() {
@@ -73,11 +73,11 @@
               for (_j = 0, _len1 = fields.length; _j < _len1; _j++) {
                 field = fields[_j];
                 val = obj[field] || "";
-                _results.push(val.toString().replace(/\s\s/g, "").replace(/\n|\r/g, "").replace(/;/g, ""));
+                _results.push(val.toString().replace(/\s\s/g, "").replace(/\n|\r/g, "").replace(/,/g, ";"));
               }
               return _results;
             })();
-            res += "" + (objectValues.join(';')) + "\n";
+            res += "" + (objectValues.join(",")) + "\n";
           }
           fullFilename = "./tmp/results.csv";
           return fs.write(fullFilename, res);
