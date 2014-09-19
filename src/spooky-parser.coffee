@@ -1,4 +1,4 @@
-module.exports = (url)->
+module.exports = (url, logfile)->
   Spooky = require("spooky")
   spooky = new Spooky(
     child:
@@ -6,7 +6,7 @@ module.exports = (url)->
 
     casper:
       logLevel: "debug"
-      verbose: false,
+      verbose: true,
       clientScripts: ['bower_components/jquery/dist/jquery.js', 'build/parser.js']
 
   , (err) ->
@@ -36,7 +36,7 @@ module.exports = (url)->
         buildFile data
 
       loadMoreReviews = (callback) ->
-        console.log(".")
+        console.log "."
         nextBtnSelector = ".d-s.L5.r0"
         casper.click nextBtnSelector
 
@@ -65,16 +65,16 @@ module.exports = (url)->
 
   spooky.on "error", (e, stack) ->
     console.error e
-    console.log stack  if stack
+    logfile stack  if stack
 
   #Uncomment this block to see all of the things Casper has to say.
   #There are a lot.
   #He has opinions.
   spooky.on 'console', (line) ->
-    console.log line
+    logfile line
 
   spooky.on "hello", (greeting) ->
-    console.log greeting
+    logfile greeting
 
   spooky.on "log", (log) ->
-    console.log log.message.replace(RegExp(" \\- .*"), "")  if log.space is "remote"
+    logfile log.message.replace(RegExp(" \\- .*"), "")  if log.space is "remote"

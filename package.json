@@ -4,11 +4,11 @@
     "coffee-script": "*"
   },
   "dependencies": {
-      "express ": "*",
-      "bower ": "*",
-      "body-parser": "^1.8.2",
-      "phantomjs ": "*",
-      "casperjs ": "*",
-      "spooky": "*"
+    "express ": "*",
+    "bower ": "*",
+    "body-parser": "^1.8.2",
+    "phantomjs ": "*",
+    "casperjs ": "*",
+    "spooky": "*"
   }
 }

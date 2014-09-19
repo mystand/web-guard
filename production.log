@@ -1,0 +1,44 @@
+APP INIT
+GET index
+POST results
+APP INIT
+POST results
+[object Object],[object Object],[object Object],[object Object]
+[37;41;1mReferenceError: Can't find variable: logfile                                    [0m
+  /Users/lxkuz/projects/google_plus_parser:[33m29[0m
+  /Users/lxkuz/projects/google_plus_parser:[33m17[0m
+  /Users/lxkuz/.nvm/v0.10.26/lib/node_modules/casperjs/modules/casper.js:[33m1553[0m in [36mrunStep[0m
+  /Users/lxkuz/.nvm/v0.10.26/lib/node_modules/casperjs/modules/casper.js:[33m399[0m in [36mcheckStep[0m
+APP INIT
+POST results
+.
+APP INIT
+GET index
+POST results
+[36m[info][0m [phantom] Starting...
+[36m[info][0m [phantom] Running suite: 3 steps
+[32;1m[debug][0m [phantom] opening url: https://plus.google.com/106797324517565881930/about?hl=en-US, HTTP GET
+[32;1m[debug][0m [phantom] Navigation requested: url=https://plus.google.com/106797324517565881930/about?hl=en-US, type=Other, willNavigate=true, isMainFrame=true
+[32;1m[debug][0m [phantom] url changed to "https://plus.google.com/106797324517565881930/about?hl=en-US"
+[32;1m[debug][0m [phantom] Navigation requested: url=about:blank, type=Other, willNavigate=true, isMainFrame=false
+[32;1m[debug][0m [phantom] Automatically injected bower_components/jquery/dist/jquery.js client side
+[32;1m[debug][0m [phantom] Automatically injected build/parser.js client side
+[32;1m[debug][0m [phantom] Successfully injected Casper client-side utilities
+[32;1m[debug][0m [phantom] start page is loaded
+[36m[info][0m [phantom] Step anonymous 3/3 https://plus.google.com/106797324517565881930/about?hl=en-US (HTTP 200)
+[36m[info][0m [phantom] Step anonymous 3/3: done in 4434ms.
+[36m[info][0m [phantom] Step _step 4/4 https://plus.google.com/106797324517565881930/about?hl=en-US (HTTP 200)
+[36m[info][0m [phantom] Step _step 4/4: done in 4450ms.
+[36m[info][0m [phantom] waitFor() finished in 40ms.
+[36m[info][0m [phantom] Step anonymous 5/5 https://plus.google.com/106797324517565881930/about?hl=en-US (HTTP 200)
+.
+[32;1m[debug][0m [phantom] Mouse event 'mousedown' on selector: .d-s.L5.r0
+[32;1m[debug][0m [phantom] Mouse event 'mouseup' on selector: .d-s.L5.r0
+[32;1m[debug][0m [phantom] Mouse event 'click' on selector: .d-s.L5.r0
+[36m[info][0m [phantom] Step anonymous 5/5: done in 4562ms.
+[36m[info][0m [phantom] Step _step 6/6 https://plus.google.com/106797324517565881930/about?hl=en-US (HTTP 200)
+[36m[info][0m [phantom] Step _step 6/6: done in 4563ms.
+[36m[info][0m [phantom] waitFor() finished in 279ms.
+[36m[info][0m [phantom] Step anonymous 7/7 https://plus.google.com/106797324517565881930/about?hl=en-US (HTTP 200)
+[36m[info][0m [phantom] Step anonymous 7/7: done in 4903ms.
+[36m[info][0m [phantom] Done 7 steps in 4904ms
