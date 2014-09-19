@@ -2,9 +2,13 @@
   "name": "google-plus-parser",
   "devDependencies": {
     "coffee-script": "*",
-    "spooky": "*"
   },
   "dependencies": {
-    "body-parser": "^1.8.2"
+      "express ": "*",
+      "bower ": "*",
+      "body-parser": "^1.8.2",
+      "phantomjs ": "*",
+      "casperjs ": "*",
+      "spooky": "*"
   }
 }
