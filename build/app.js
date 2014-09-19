@@ -31,7 +31,7 @@
     var applySpooky, resultsTest, url;
     console.log("POST results");
     url = req.body.url;
-    applySpooky = require("build/spooky-parser");
+    applySpooky = require("./build/spooky-parser");
     applySpooky(url);
     resultsTest = function() {
       return setTimeout(function() {
@@ -50,5 +50,7 @@
   });
 
   app.listen(port);
+
+  console.log("started on port: " + port);
 
 }).call(this);
