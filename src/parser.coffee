@@ -17,15 +17,15 @@ window.googlePlusParser =
     for el in allReviews
       el = jq el
       review = {}
-      link = el.children().find("a[oid]")[1]
-      if link
-        review.username = link.innerHTML.split(">").reverse()[0]
-        review.imageLink = "http:" + el.find(".we.qAa.M5").attr("src")
-        review.userLink = "https://plus.google.com/" + jq(link).attr("href").split("./")[1]
+      link = el.children().find("a[oid]").last()
+      if link.length > 0
+        review.imageLink = "http:" + el.find("img").attr("src")
+        review.userLink = "https://plus.google.com/" + link.attr("href").split("./")[1]
+        review.username = link.html().split(">").reverse()[0]
       else
         review.username = "A Google User"
 
-      selectedStartSelector = ".b-db-ac.b-db-ac-th"
+      selectedStartSelector = "[role='button'].b-db-ac-th"
       review.rate = window.googlePlusParser.verbalizeRate(el.find(selectedStartSelector).length)
       review.content = el.find(".GKa.oAa").html?() || ""
 
