@@ -29,7 +29,7 @@ window.googlePlusParser =
       review.rate = window.googlePlusParser.verbalizeRate(el.find(selectedStartSelector).length)
       review.content = el.find(".GKa.oAa").html?() || ""
 
-      responseSelector = "span.TTb:contains('Response from the owner')"
+      responseSelector = "span:contains('Response from the owner')"
       review.hasResponse = el.find(responseSelector).length > 0
       if review.hasResponse
         review.response = el.find(responseSelector).parent().next().html()

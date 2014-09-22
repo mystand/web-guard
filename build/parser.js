@@ -36,7 +36,7 @@
         selectedStartSelector = "[role='button'].b-db-ac-th";
         review.rate = window.googlePlusParser.verbalizeRate(el.find(selectedStartSelector).length);
         review.content = (typeof (_base = el.find(".GKa.oAa")).html === "function" ? _base.html() : void 0) || "";
-        responseSelector = "span.TTb:contains('Response from the owner')";
+        responseSelector = "span:contains('Response from the owner')";
         review.hasResponse = el.find(responseSelector).length > 0;
         if (review.hasResponse) {
           review.response = el.find(responseSelector).parent().next().html();
