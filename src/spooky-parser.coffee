@@ -1,3 +1,6 @@
+path = require "path"
+config = require path.join(__dirname, "config")
+
 module.exports = (url)->
   Spooky = require("spooky")
   spooky = new Spooky(
@@ -15,7 +18,7 @@ module.exports = (url)->
       e.details = err
       throw e
     spooky.start url
-    spooky.then ->
+    spooky.then [ config: config, ->
       casper = @
 
       casper.on 'remote.message', (message) ->
@@ -49,12 +52,13 @@ module.exports = (url)->
 
       buildFileJSON = (data) ->
         fs = require('fs')
-        fullFilename = "./tmp/results.json"
+        fullFilename = "./tmp/#{config.filename}"
+        console.log fullFilename
         fs.write fullFilename, JSON.stringify(data)
+
 
       buildFileCSV = (data) ->
         fs = require('fs')
-
         fields = ["rate", "hasResponse", "username","imageLink","userLink","content","response"]
         res = "#{fields.join(',')}\n"
 
@@ -62,18 +66,25 @@ module.exports = (url)->
           objectValues = for field in fields
             val = obj[field] || ""
             val.toString().replace(/\s\s/g, "").replace(/\n|\r/g, "").replace(/,/g, ";")
-          res += "#{objectValues.join(",")}\n"
-        fullFilename = "./tmp/results.csv"
+          res += "#{objectValues.join(',')}\n"
+        fullFilename = "./tmp/#{config.filename}"
+        console.log fullFilename
         fs.write fullFilename, res
 
-      buildFile = (data, json = true) ->
-        if json
+
+
+      buildFile = (data) ->
+        if config.json
+          console.log("buildFile: JSON")
           buildFileJSON data
         else
+          console.log("buildFile: CSV")
+
           buildFileCSV data
 
-
+    ]
     spooky.run()
+
   )
 
   spooky.on "error", (e, stack) ->

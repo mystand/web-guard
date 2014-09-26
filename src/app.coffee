@@ -4,6 +4,7 @@ path = require "path"
 bodyParser = require 'body-parser'
 express = require 'express'
 logfmt = require "logfmt"
+config = require path.join(__dirname, "config")
 
 app = express()
 app.use(bodyParser())
@@ -21,10 +22,9 @@ app.post '/results', (req, res) ->
   applySpooky url
   resultsTest = ->
    setTimeout ->
-     filename = "results.json" # "results.csv"
-     resultsPath = path.join(__dirname, "../tmp", filename)
+     resultsPath = path.join(__dirname, "../tmp", config.filename)
      if fs.existsSync(resultsPath)
-       res.header "Content-Type", "application/json"
+       res.header "Content-Type", "application/json" if config.json
        res.sendFile resultsPath, {}, ->
          fs.unlink resultsPath
      else
