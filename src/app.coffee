@@ -24,6 +24,7 @@ app.post '/results', (req, res) ->
      filename = "results.json" # "results.csv"
      resultsPath = path.join(__dirname, "../tmp", filename)
      if fs.existsSync(resultsPath)
+       res.header "Content-Type", "application/json"
        res.sendFile resultsPath, {}, ->
          fs.unlink resultsPath
      else

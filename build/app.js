@@ -39,6 +39,7 @@
         filename = "results.json";
         resultsPath = path.join(__dirname, "../tmp", filename);
         if (fs.existsSync(resultsPath)) {
+          res.header("Content-Type", "application/json");
           return res.sendFile(resultsPath, {}, function() {
             return fs.unlink(resultsPath);
           });
