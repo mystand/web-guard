@@ -33,6 +33,7 @@ module.exports = (url)->
       parseReviews = ->
         data = casper.evaluate ->
           window.googlePlusParser.parseReviews()
+
         buildFile data
 
       loadMoreReviews = (callback) ->
@@ -46,7 +47,12 @@ module.exports = (url)->
             jq(buttonPanelSelector).first().css("display") is "none"
         , callback, -> loadMoreReviews callback
 
-      buildFile = (data) ->
+      buildFileJSON = (data) ->
+        fs = require('fs')
+        fullFilename = "./tmp/results.json"
+        fs.write fullFilename, JSON.stringify(data)
+
+      buildFileCSV = (data) ->
         fs = require('fs')
 
         fields = ["rate", "hasResponse", "username","imageLink","userLink","content","response"]
@@ -59,6 +65,13 @@ module.exports = (url)->
           res += "#{objectValues.join(",")}\n"
         fullFilename = "./tmp/results.csv"
         fs.write fullFilename, res
+
+      buildFile = (data, json = true) ->
+        if json
+          buildFileJSON data
+        else
+          buildFileCSV data
+
 
     spooky.run()
   )

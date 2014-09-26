@@ -21,7 +21,7 @@
       }
       spooky.start(url);
       spooky.then(function() {
-        var buildFile, casper, loadMoreReviews, parseReviews;
+        var buildFile, buildFileCSV, buildFileJSON, casper, loadMoreReviews, parseReviews;
         casper = this;
         casper.on('remote.message', function(message) {
           return casper.echo("browser: " + message);
@@ -60,7 +60,13 @@
             return loadMoreReviews(callback);
           });
         };
-        return buildFile = function(data) {
+        buildFileJSON = function(data) {
+          var fs, fullFilename;
+          fs = require('fs');
+          fullFilename = "./tmp/results.json";
+          return fs.write(fullFilename, JSON.stringify(data));
+        };
+        buildFileCSV = function(data) {
           var field, fields, fs, fullFilename, obj, objectValues, res, val, _i, _len;
           fs = require('fs');
           fields = ["rate", "hasResponse", "username", "imageLink", "userLink", "content", "response"];
@@ -81,6 +87,16 @@
           }
           fullFilename = "./tmp/results.csv";
           return fs.write(fullFilename, res);
+        };
+        return buildFile = function(data, json) {
+          if (json == null) {
+            json = true;
+          }
+          if (json) {
+            return buildFileJSON(data);
+          } else {
+            return buildFileCSV(data);
+          }
         };
       });
       return spooky.run();

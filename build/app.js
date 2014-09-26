@@ -35,8 +35,9 @@
     applySpooky(url);
     resultsTest = function() {
       return setTimeout(function() {
-        var resultsPath;
-        resultsPath = path.join(__dirname, "../tmp", "results.csv");
+        var filename, resultsPath;
+        filename = "results.json";
+        resultsPath = path.join(__dirname, "../tmp", filename);
         if (fs.existsSync(resultsPath)) {
           return res.sendFile(resultsPath, {}, function() {
             return fs.unlink(resultsPath);

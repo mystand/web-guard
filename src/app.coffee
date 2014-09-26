@@ -21,7 +21,8 @@ app.post '/results', (req, res) ->
   applySpooky url
   resultsTest = ->
    setTimeout ->
-     resultsPath = path.join(__dirname, "../tmp", "results.csv")
+     filename = "results.json" # "results.csv"
+     resultsPath = path.join(__dirname, "../tmp", filename)
      if fs.existsSync(resultsPath)
        res.sendFile resultsPath, {}, ->
          fs.unlink resultsPath
