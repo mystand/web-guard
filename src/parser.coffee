@@ -30,7 +30,7 @@ window.googlePlusParser =
       review.content = el.find(".GKa.oAa").html?() || ""
 
 
-      review.time = el.find("[role='button']").last().parent().next().find("span").html?() || ""
+      review.time = el.find(selectedStartSelector).last().parent().next().find("span").html?() || ""
       responseSelector = "span:contains('Response from the owner')"
       review.hasResponse = el.find(responseSelector).length > 0
 

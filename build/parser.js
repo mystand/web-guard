@@ -36,7 +36,7 @@
         selectedStartSelector = "[role='button'].b-db-ac-th";
         review.rate = window.googlePlusParser.verbalizeRate(el.find(selectedStartSelector).length);
         review.content = (typeof (_base = el.find(".GKa.oAa")).html === "function" ? _base.html() : void 0) || "";
-        review.time = (typeof (_base1 = el.find("[role='button']").last().parent().next().find("span")).html === "function" ? _base1.html() : void 0) || "";
+        review.time = (typeof (_base1 = el.find(selectedStartSelector).last().parent().next().find("span")).html === "function" ? _base1.html() : void 0) || "";
         responseSelector = "span:contains('Response from the owner')";
         review.hasResponse = el.find(responseSelector).length > 0;
         if (review.hasResponse) {
