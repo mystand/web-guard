@@ -42,7 +42,6 @@ module.exports = (url)->
       loadMoreReviews = (callback) ->
         console.log "."
         nextBtnSelector = ".d-s.L5.r0"
-        # $(".d-s.L5.r0").first().click()
         casper.click nextBtnSelector
 
         casper.waitFor ->
