@@ -59,7 +59,7 @@ module.exports = (url)->
 
       buildFileCSV = (data) ->
         fs = require('fs')
-        fields = ["rate", "hasResponse", "username","imageLink","userLink","content","response"]
+        fields = ["rate", "hasResponse", "username","imageLink","userLink","content","response", "time"]
         res = "#{fields.join(',')}\n"
 
         for obj in data

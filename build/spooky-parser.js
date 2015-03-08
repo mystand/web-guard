@@ -79,7 +79,7 @@
           buildFileCSV = function(data) {
             var field, fields, fs, fullFilename, obj, objectValues, res, val, _i, _len;
             fs = require('fs');
-            fields = ["rate", "hasResponse", "username", "imageLink", "userLink", "content", "response"];
+            fields = ["rate", "hasResponse", "username", "imageLink", "userLink", "content", "response", "time"];
             res = "" + (fields.join(',')) + "\n";
             for (_i = 0, _len = data.length; _i < _len; _i++) {
               obj = data[_i];
