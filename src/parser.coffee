@@ -43,3 +43,8 @@ window.googlePlusParser =
 
 
     reviews
+
+console.log("opopop")
+el = jq("[role='menuitem'][value='3']")
+console.log(el.length)
+el.addClass "alahakbar"

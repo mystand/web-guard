@@ -36,25 +36,39 @@
           casper.on('remote.message', function(message) {
             return casper.echo("browser: " + message);
           });
-          casper.evaluate(function() {
-            return window.jq = $.noConflict(true);
-          });
           casper.waitFor(function() {
             return casper.evaluate(function() {
-              return window.googlePlusParser !== void 0;
+              return window.jq = $.noConflict(true);
             });
-          }, (function(_this) {
-            return function() {
-              if (pages === -1 || pages > 1) {
-                if (pages !== -1) {
-                  pages -= 1;
-                }
-                return loadMoreReviews(parseReviews);
-              } else {
-                return parseReviews();
-              }
-            };
-          })(this));
+          }, function() {
+            casper.clickLabel("Most helpful");
+            return casper.waitFor(function() {
+              return casper.evaluate(function() {
+                console.log(window.jq("[role=menu]").length);
+                return window.jq("[role=menu]").css("display") === "block";
+              });
+            }, function() {
+              console.log("menu was opened");
+              casper.clickLabel("Latest");
+              console.log("timeout after reordering");
+              return casper.waitFor(function() {
+                return casper.evaluate(function() {
+                  return (window.googlePlusParser !== void 0) && (window.jq("[role=listbox]").html().indexOf("Latest") !== -1);
+                });
+              }, (function(_this) {
+                return function() {
+                  if (pages === -1 || pages > 1) {
+                    if (pages !== -1) {
+                      pages -= 1;
+                    }
+                    return loadMoreReviews(parseReviews);
+                  } else {
+                    return parseReviews();
+                  }
+                };
+              })(this));
+            });
+          });
           parseReviews = function() {
             var data;
             data = casper.evaluate(function() {
@@ -63,7 +77,7 @@
             return buildFile(data);
           };
           loadMoreReviews = function(callback) {
-            var nextBtnSelector, orderBtnSelector;
+            var nextBtnSelector;
             if (pages === 0) {
               if (typeof callback === "function") {
                 callback();
@@ -74,8 +88,6 @@
               pages -= 1;
             }
             console.log(".");
-            orderBtnSelector = ".d-s.L5.r0";
-            casper.click;
             nextBtnSelector = ".d-s.L5.r0";
             casper.click(nextBtnSelector);
             return casper.waitFor(function() {

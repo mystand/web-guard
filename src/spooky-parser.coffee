@@ -24,18 +24,30 @@ module.exports = (url, pages)->
       casper.on 'remote.message', (message) ->
         casper.echo "browser: " + message
 
-      casper.evaluate ->
-        window.jq = $.noConflict yes
-
       casper.waitFor ->
         casper.evaluate ->
-          window.googlePlusParser != undefined
-      , =>
-        if pages is -1 || pages > 1
-          pages -= 1 if pages != -1
-          loadMoreReviews parseReviews
-        else
-          parseReviews()
+          window.jq = $.noConflict yes
+      ,  ->
+        #        orderBtnSelector = ".Rxb.hUb.d-y-r-c.b-Qb.d-k-l"  #"//*[@role='listbox']"
+        casper.clickLabel "Most helpful" # orderBtnSelector
+
+        casper.waitFor ->
+          casper.evaluate ->
+            console.log(window.jq("[role=menu]").length)
+            window.jq("[role=menu]").css("display") is "block"
+        , ->
+          console.log("menu was opened")
+          casper.clickLabel "Latest"
+          console.log("timeout after reordering")
+          casper.waitFor ->
+            casper.evaluate ->
+              (window.googlePlusParser != undefined) and (window.jq("[role=listbox]").html().indexOf("Latest") != -1)
+          , =>
+            if pages is -1 || pages > 1
+              pages -= 1 if pages != -1
+              loadMoreReviews parseReviews
+            else
+              parseReviews()
 
       parseReviews = ->
         data = casper.evaluate ->
@@ -50,12 +62,6 @@ module.exports = (url, pages)->
 
         pages -= 1 if pages != -1
         console.log "."
-
-        orderBtnSelector = ".d-s.L5.r0"
-
-
-        casper.click
-
 
         nextBtnSelector = ".d-s.L5.r0"
         casper.click nextBtnSelector
@@ -86,8 +92,6 @@ module.exports = (url, pages)->
         fullFilename = "./tmp/#{config.filename}"
         console.log fullFilename
         fs.write fullFilename, res
-
-
 
       buildFile = (data) ->
         if config.json
