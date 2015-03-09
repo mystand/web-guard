@@ -25,12 +25,14 @@ window.googlePlusParser =
       else
         review.username = "A Google User"
 
-      selectedStartSelector = "[role='button'].b-db-ac-th"
-      review.rate = window.googlePlusParser.verbalizeRate(el.find(selectedStartSelector).length)
+      selectedStarSelector = "[role='button'].b-db-ac-th"
       review.content = el.find(".GKa.oAa").html?() || ""
+      review.ratingValue = el.find(selectedStarSelector).length
+      review.rate = window.googlePlusParser.verbalizeRate(review.ratingValue)
 
 
-      review.time = el.find(selectedStartSelector).last().parent().next().find("span").html?() || ""
+
+      review.time = el.find(selectedStarSelector).last().parent().next().find("span").html?() || ""
       responseSelector = "span:contains('Response from the owner')"
       review.hasResponse = el.find(responseSelector).length > 0
 

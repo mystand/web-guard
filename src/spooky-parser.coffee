@@ -1,7 +1,7 @@
 path = require "path"
 config = require path.join(__dirname, "config")
 
-module.exports = (url)->
+module.exports = (url, pages)->
   Spooky = require("spooky")
   spooky = new Spooky(
     child:
@@ -18,7 +18,7 @@ module.exports = (url)->
       e.details = err
       throw e
     spooky.start url
-    spooky.then [ config: config, ->
+    spooky.then [ config: config, pages: pages, ->
       casper = @
 
       casper.on 'remote.message', (message) ->
@@ -31,7 +31,11 @@ module.exports = (url)->
         casper.evaluate ->
           window.googlePlusParser != undefined
       , =>
-        loadMoreReviews parseReviews
+        if pages is -1 || pages > 1
+          pages -= 1 if pages != -1
+          loadMoreReviews parseReviews
+        else
+          parseReviews()
 
       parseReviews = ->
         data = casper.evaluate ->
@@ -40,26 +44,38 @@ module.exports = (url)->
         buildFile data
 
       loadMoreReviews = (callback) ->
+        if pages is 0
+          callback?()
+          return
+
+        pages -= 1 if pages != -1
         console.log "."
+
+        orderBtnSelector = ".d-s.L5.r0"
+
+
+        casper.click
+
+
         nextBtnSelector = ".d-s.L5.r0"
         casper.click nextBtnSelector
-
         casper.waitFor ->
           casper.evaluate ->
             buttonPanelSelector = '.R4.b2.gUb'
             jq(buttonPanelSelector).first().css("display") is "none"
-        , callback, -> loadMoreReviews callback
+        , callback, ->
+          loadMoreReviews callback
+
 
       buildFileJSON = (data) ->
         fs = require('fs')
         fullFilename = "./tmp/#{config.filename}"
-        console.log fullFilename
         fs.write fullFilename, JSON.stringify(data)
 
 
       buildFileCSV = (data) ->
         fs = require('fs')
-        fields = ["rate", "hasResponse", "username","imageLink","userLink","content","response", "time"]
+        fields = ["rate", "ratingValue", "hasResponse", "username","imageLink","userLink","content","response", "time"]
         res = "#{fields.join(',')}\n"
 
         for obj in data

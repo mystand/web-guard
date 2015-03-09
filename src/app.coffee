@@ -18,8 +18,9 @@ app.get '/', (req, res) ->
 app.post '/results', (req, res) ->
   console.log "POST results"
   url = req.body.url
+  pages = parseInt(req.body.max_pages) || -1
   applySpooky = require path.join(__dirname, "spooky-parser")
-  applySpooky url
+  applySpooky url, pages
   resultsTest = ->
    setTimeout ->
      resultsPath = path.join(__dirname, "../tmp", config.filename)

@@ -30,11 +30,12 @@
   });
 
   app.post('/results', function(req, res) {
-    var applySpooky, resultsTest, url;
+    var applySpooky, pages, resultsTest, url;
     console.log("POST results");
     url = req.body.url;
+    pages = parseInt(req.body.max_pages) || -1;
     applySpooky = require(path.join(__dirname, "spooky-parser"));
-    applySpooky(url);
+    applySpooky(url, pages);
     resultsTest = function() {
       return setTimeout(function() {
         var resultsPath;

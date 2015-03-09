@@ -18,7 +18,7 @@
       }
     },
     parseReviews: function() {
-      var allReviews, el, link, responseSelector, review, reviews, selectedStartSelector, _base, _base1, _i, _len;
+      var allReviews, el, link, responseSelector, review, reviews, selectedStarSelector, _base, _base1, _i, _len;
       allReviews = window.googlePlusParser.getAllReviews();
       reviews = [];
       for (_i = 0, _len = allReviews.length; _i < _len; _i++) {
@@ -33,10 +33,11 @@
         } else {
           review.username = "A Google User";
         }
-        selectedStartSelector = "[role='button'].b-db-ac-th";
-        review.rate = window.googlePlusParser.verbalizeRate(el.find(selectedStartSelector).length);
+        selectedStarSelector = "[role='button'].b-db-ac-th";
         review.content = (typeof (_base = el.find(".GKa.oAa")).html === "function" ? _base.html() : void 0) || "";
-        review.time = (typeof (_base1 = el.find(selectedStartSelector).last().parent().next().find("span")).html === "function" ? _base1.html() : void 0) || "";
+        review.ratingValue = el.find(selectedStarSelector).length;
+        review.rate = window.googlePlusParser.verbalizeRate(review.ratingValue);
+        review.time = (typeof (_base1 = el.find(selectedStarSelector).last().parent().next().find("span")).html === "function" ? _base1.html() : void 0) || "";
         responseSelector = "span:contains('Response from the owner')";
         review.hasResponse = el.find(responseSelector).length > 0;
         if (review.hasResponse) {

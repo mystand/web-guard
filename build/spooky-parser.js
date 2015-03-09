@@ -6,7 +6,7 @@
 
   config = require(path.join(__dirname, "config"));
 
-  module.exports = function(url) {
+  module.exports = function(url, pages) {
     var Spooky, spooky;
     Spooky = require("spooky");
     spooky = new Spooky({
@@ -28,7 +28,8 @@
       spooky.start(url);
       spooky.then([
         {
-          config: config
+          config: config,
+          pages: pages
         }, function() {
           var buildFile, buildFileCSV, buildFileJSON, casper, loadMoreReviews, parseReviews;
           casper = this;
@@ -44,7 +45,14 @@
             });
           }, (function(_this) {
             return function() {
-              return loadMoreReviews(parseReviews);
+              if (pages === -1 || pages > 1) {
+                if (pages !== -1) {
+                  pages -= 1;
+                }
+                return loadMoreReviews(parseReviews);
+              } else {
+                return parseReviews();
+              }
             };
           })(this));
           parseReviews = function() {
@@ -55,8 +63,19 @@
             return buildFile(data);
           };
           loadMoreReviews = function(callback) {
-            var nextBtnSelector;
+            var nextBtnSelector, orderBtnSelector;
+            if (pages === 0) {
+              if (typeof callback === "function") {
+                callback();
+              }
+              return;
+            }
+            if (pages !== -1) {
+              pages -= 1;
+            }
             console.log(".");
+            orderBtnSelector = ".d-s.L5.r0";
+            casper.click;
             nextBtnSelector = ".d-s.L5.r0";
             casper.click(nextBtnSelector);
             return casper.waitFor(function() {
@@ -73,13 +92,12 @@
             var fs, fullFilename;
             fs = require('fs');
             fullFilename = "./tmp/" + config.filename;
-            console.log(fullFilename);
             return fs.write(fullFilename, JSON.stringify(data));
           };
           buildFileCSV = function(data) {
             var field, fields, fs, fullFilename, obj, objectValues, res, val, _i, _len;
             fs = require('fs');
-            fields = ["rate", "hasResponse", "username", "imageLink", "userLink", "content", "response", "time"];
+            fields = ["rate", "ratingValue", "hasResponse", "username", "imageLink", "userLink", "content", "response", "time"];
             res = "" + (fields.join(',')) + "\n";
             for (_i = 0, _len = data.length; _i < _len; _i++) {
               obj = data[_i];
