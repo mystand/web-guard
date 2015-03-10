@@ -10,7 +10,7 @@ module.exports = (url, pages)->
     casper:
       logLevel: "debug"
       verbose: true,
-      clientScripts: ['bower_components/jquery/dist/jquery.js', 'build/parser.js']
+      clientScripts: ['bower_components/jquery/dist/jquery.js', 'build/latest.js', 'build/parser.js']
 
   , (err) ->
     if err
@@ -20,6 +20,8 @@ module.exports = (url, pages)->
     spooky.start url
     spooky.then [ config: config, pages: pages, ->
       casper = @
+      casper.options.waitTimeout = 10000
+      casper.options.retryTimeout = 1000
 
       casper.on 'remote.message', (message) ->
         casper.echo "browser: " + message
@@ -29,7 +31,8 @@ module.exports = (url, pages)->
 
       casper.waitFor ->
         casper.evaluate ->
-          window.googlePlusParser != undefined
+          console.log(window.jq("[role=option]").html())
+          (window.googlePlusParser != undefined) and (window.jq("[role=option]").html() is "Latest")
       , =>
         if pages is -1 || pages > 1
           pages -= 1 if pages != -1

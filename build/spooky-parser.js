@@ -16,7 +16,7 @@
       casper: {
         logLevel: "debug",
         verbose: true,
-        clientScripts: ['bower_components/jquery/dist/jquery.js', 'build/parser.js']
+        clientScripts: ['bower_components/jquery/dist/jquery.js', 'build/latest.js', 'build/parser.js']
       }
     }, function(err) {
       var e;
@@ -33,6 +33,8 @@
         }, function() {
           var buildFile, buildFileCSV, buildFileJSON, casper, loadMoreReviews, parseReviews;
           casper = this;
+          casper.options.waitTimeout = 10000;
+          casper.options.retryTimeout = 1000;
           casper.on('remote.message', function(message) {
             return casper.echo("browser: " + message);
           });
@@ -41,7 +43,8 @@
           });
           casper.waitFor(function() {
             return casper.evaluate(function() {
-              return window.googlePlusParser !== void 0;
+              console.log(window.jq("[role=option]").html());
+              return (window.googlePlusParser !== void 0) && (window.jq("[role=option]").html() === "Latest");
             });
           }, (function(_this) {
             return function() {

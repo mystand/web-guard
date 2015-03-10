@@ -30,8 +30,6 @@ window.googlePlusParser =
       review.ratingValue = el.find(selectedStarSelector).length
       review.rate = window.googlePlusParser.verbalizeRate(review.ratingValue)
 
-
-
       review.time = el.find(selectedStarSelector).last().parent().next().find("span").html?() || ""
       responseSelector = "span:contains('Response from the owner')"
       review.hasResponse = el.find(responseSelector).length > 0
@@ -39,7 +37,6 @@ window.googlePlusParser =
       if review.hasResponse
         review.response = el.find(responseSelector).parent().next().html()
       reviews.push review
-
 
 
     reviews
