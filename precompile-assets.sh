@@ -1,0 +1,1 @@
+coffee --watch --compile --output build/public/ assets/
