@@ -1,3 +1,5 @@
+# оставил как пример использования каспера
+
 path = require "path"
 config = require path.join(__dirname, "config")
 

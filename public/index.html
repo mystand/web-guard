@@ -5,13 +5,14 @@
     <script type="text/javascript" src="jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="angular/angular.js"></script>
     <script type="text/javascript" src="js/guard.js"></script>
-    <link rel="stylesheet" type="text/css" src="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
     <div ng-controller="SitesListController as sitesList">
-        <h1>Проверка {{sitesList.sites.length}} сайтов Mystand</h1>
+        <h1>Проверка сайтов Mystand</h1>
+        <h3> Не работает сайтов: {{sitesList.failsCount()}}</h3>
         <ul class="container">
-            <li ng-repeat="site in sitesList.sites">
+            <li ng-repeat="site in sitesList.sites" class="status-maybe-error status-{{site.statusCode}}">
                 <a href="{{site.url}}">{{site.name}}</a>
             </li>
         </ul>

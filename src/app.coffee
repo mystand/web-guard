@@ -1,10 +1,9 @@
 http = require 'http'
 express = require 'express'
 path = require 'path'
-##fs = require 'fs'
-#logfmt = require 'logfmt'
-#config = require path.join(__dirname, 'config')
-#
+fs = require 'fs'
+sitesPath = path.join(__dirname, '../config', 'sites.json')
+storage = require "./storage"
 
 
 app = express()
@@ -19,30 +18,11 @@ app.get '/', (req, res) ->
 app.get '/sites', (req, response) ->
   console.log "GET sites"
   response.header "Content-Type", "application/json"
-  response.sendFile path.join(__dirname, '../config', 'sites.json')
+  response.send storage.json()
 
-app.get '/check', (req, response) ->
-  site = {}
-  site.url = req.param "url"
-  site.name = req.param "name"
-  site.index = req.param "index"
-  request = require 'sync-request'
-  try
-    res = request("GET", site.url)
-  catch
-    res = {}
-    res.statusCode = 404
-  site.statusCode = res.statusCode
-  response.header "Content-Type", "application/json"
-  response.send JSON.stringify(site)
+app.listen port
+console.log("started on port: #{port}")
 
-
-# мне было лень разбираться с монгой, так что встречаем мою СУБД)))
-
-setItem =  (key, value) ->
-
-
-getItem = (key) ->
 
 
 
@@ -62,5 +42,4 @@ getItem = (key) ->
 ##    , 500
 ##  resultsTest()
 #
-app.listen port
-console.log("started on port: #{port}")
+
