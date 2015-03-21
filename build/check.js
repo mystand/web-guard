@@ -11,16 +11,18 @@
   storage = require("./storage");
 
   checkSite = function(site) {
-    var request, res;
-    request = require('sync-request');
-    try {
-      res = request("GET", site.url);
-    } catch (_error) {
-      res = {};
-      res.statusCode = 404;
-    }
-    site.statusCode = res.statusCode;
-    return storage.push("sites", site);
+    return setTimeout(function() {
+      var request, res;
+      request = require('sync-request');
+      try {
+        res = request("GET", site.url);
+      } catch (_error) {
+        res = {};
+        res.statusCode = 404;
+      }
+      site.statusCode = res.statusCode;
+      return storage.push("sites", site);
+    }, 0);
   };
 
   checkSites = function() {
