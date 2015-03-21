@@ -1,6 +1,7 @@
 {
-    "name": "google-plus-parser",
+    "name": "web-guard",
     "devDependencies": {
-        "jquery": "*"
+        "jquery": "*",
+        "angular": "*"
     }
 }

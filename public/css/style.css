@@ -1,0 +1,41 @@
+body {
+    font-family: "Helvetic Neue", Helvetica, Arial;
+}
+
+h1 {
+    text-align: center;
+}
+
+li {
+    list-style: none;
+    color: grey;
+}
+
+li a {
+    float: right;
+    text-decoration: none;
+    color: grey;
+}
+
+li a:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+li.status-maybe-error {
+    color: red;
+}
+
+li.status-maybe-error a {
+    color: black;
+    font-weight: bold;
+}
+
+li.status-maybe-error.status-200 {
+    color: green;
+}
+
+li.status-maybe-error.status-200 a {
+    color: grey;
+    font-weight: normal;
+}

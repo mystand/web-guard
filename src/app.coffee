@@ -1,20 +1,25 @@
 http = require 'http'
 express = require 'express'
-#fs = require 'fs'
-bodyParser = require 'body-parser'
 path = require 'path'
-logfmt = require 'logfmt'
-config = require path.join(__dirname, 'config')
+##fs = require 'fs'
+#logfmt = require 'logfmt'
+#config = require path.join(__dirname, 'config')
+#
+
 
 app = express()
-app.use(bodyParser())
-app.use(logfmt.requestLogger())
-app.use(express.static(__dirname + '../public'));
+app.use express.static(path.join(__dirname + '/../public'))
+app.use express.static(path.join(__dirname + '/../bower_components'))
 port = Number(process.env.PORT || 5000);
 
 app.get '/', (req, res) ->
   console.log "GET index"
-  res.sendFile(path.join(__dirname, '../public', 'index.html'))
+  res.render 'index'
+
+app.get '/sites', (req, response) ->
+  console.log "GET sites"
+  response.header "Content-Type", "application/json"
+  response.sendFile path.join(__dirname, '../config', 'sites.json')
 
 app.get '/check', (req, response) ->
   site = {}
@@ -32,21 +37,30 @@ app.get '/check', (req, response) ->
   response.send JSON.stringify(site)
 
 
-#  url = req.body.url
-#  pages = parseInt(req.body.max_pages) || -1
-#  applySpooky = require path.join(__dirname, "spooky-parser")
-#  applySpooky url, pages
-#  resultsTest = ->
-#   setTimeout ->
-#     resultsPath = path.join(__dirname, "../tmp", config.filename)
-#     if fs.existsSync(resultsPath)
-#       res.header "Content-Type", "application/json" if config.json
-#       res.sendFile resultsPath, {}, ->
-#         fs.unlink resultsPath
-#     else
-#       resultsTest()
-#    , 500
-#  resultsTest()
+# мне было лень разбираться с монгой, так что встречаем мою СУБД)))
 
+setItem =  (key, value) ->
+
+
+getItem = (key) ->
+
+
+
+##  url = req.body.url
+##  pages = parseInt(req.body.max_pages) || -1
+##  applySpooky = require path.join(__dirname, "spooky-parser")
+##  applySpooky url, pages
+##  resultsTest = ->
+##   setTimeout ->
+##     resultsPath = path.join(__dirname, "../tmp", config.filename)
+##     if fs.existsSync(resultsPath)
+##       res.header "Content-Type", "application/json" if config.json
+##       res.sendFile resultsPath, {}, ->
+##         fs.unlink resultsPath
+##     else
+##       resultsTest()
+##    , 500
+##  resultsTest()
+#
 app.listen port
 console.log("started on port: #{port}")

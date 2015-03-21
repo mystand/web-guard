@@ -1,1 +1,1 @@
-coffee --watch --compile --output build/public/ assets/
+coffee --watch --compile --output public/js assets/
