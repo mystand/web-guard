@@ -10,14 +10,13 @@ checkSite = (site) ->
   catch
     res = {}
     res.statusCode = 404
-  console.log("code: #{res.statusCode}")
   site.statusCode = res.statusCode
   storage.push "sites", site
 
-(->
+checkSites = ->
   sites = JSON.parse(fs.readFileSync sitesPath).sites
   storage.set "sites", []
   for site in sites
-    console.log("check #{site.url}")
     checkSite(site)
-)()
+
+module.exports = checkSites

@@ -4,7 +4,7 @@ path = require 'path'
 fs = require 'fs'
 sitesPath = path.join(__dirname, '../config', 'sites.json')
 storage = require "./storage"
-
+checkSites = require "./check"
 
 app = express()
 app.use express.static(path.join(__dirname + '/../public'))
@@ -19,6 +19,11 @@ app.get '/sites', (req, response) ->
   console.log "GET sites"
   response.header "Content-Type", "application/json"
   response.send storage.json()
+
+minutesCount = 5
+interval = 60 * 1000 * minutesCount
+intervalId = setInterval checkSites, interval
+checkSites()
 
 app.listen port
 console.log("started on port: #{port}")
