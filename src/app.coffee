@@ -3,6 +3,8 @@ express = require 'express'
 path = require 'path'
 fs = require 'fs'
 sitesPath = path.join(__dirname, '../config', 'sites.json')
+
+mailer = require "./mailer"
 storage = require "./storage"
 checkSites = require "./check"
 
@@ -20,15 +22,18 @@ app.get '/sites', (req, response) ->
   response.header "Content-Type", "application/json"
   response.send storage.json()
 
-minutesCount = 5
-interval = 60 * 1000 * minutesCount
-intervalId = setInterval checkSites, interval
-checkSites()
-
 app.listen port
 console.log("started on port: #{port}")
+mailer({url: "http://mystand.ru"})
 
-
+#check = ->
+#  checkSites mailing
+#
+#minutesCount = 1
+#interval = 60 * 1000 * minutesCount
+#intervalId = setInterval checkSites, interval
+#checkSites()
+#
 
 
 ##  url = req.body.url

@@ -8,9 +8,11 @@
 
   sitesPath = path.join(__dirname, '../config', 'sites.json');
 
+  sitesPath = path.join(__dirname, '../config', 'sites.json');
+
   storage = require("./storage");
 
-  checkSite = function(site) {
+  checkSite = function(site, errorCallback) {
     return setTimeout(function() {
       var request, res;
       request = require('sync-request');
@@ -20,19 +22,28 @@
         res = {};
         res.statusCode = 404;
       }
+      if (res.statusCode !== site.statusCode && site.statusCode === 200) {
+        if (typeof errorCallback === "function") {
+          errorCallback(site);
+        }
+      }
       site.statusCode = res.statusCode;
       return storage.push("sites", site);
     }, 0);
   };
 
-  checkSites = function() {
+  checkSites = function(errorCallback) {
     var site, sites, _i, _len, _results;
-    sites = JSON.parse(fs.readFileSync(sitesPath)).sites;
+    console.log("check sites...");
+    sites = storage.get("sites");
+    if (!sites || sites.length === 0) {
+      sites = JSON.parse(fs.readFileSync(sitesPath)).sites;
+    }
     storage.set("sites", []);
     _results = [];
     for (_i = 0, _len = sites.length; _i < _len; _i++) {
       site = sites[_i];
-      _results.push(checkSite(site));
+      _results.push(checkSite(site, errorCallback));
     }
     return _results;
   };

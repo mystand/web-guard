@@ -12,7 +12,8 @@
     "bower": "^1.3.11",
     "phantomjs": "^1.9.9",
     "sync-request": "*",
-    "connect-assets": "*"
+    "connect-assets": "*",
+    "nodemailer": "*"
   },
   "scripts": {
     "postinstall": "./node_modules/bower/bin/bower install"
